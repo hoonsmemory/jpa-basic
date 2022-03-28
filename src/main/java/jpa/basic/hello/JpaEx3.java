@@ -30,6 +30,8 @@ public class JpaEx3 {
             Member member = em.find(Member.class, 150L);
             member.setName("ZZZZZ");
 
+            Member member2 = em.find(Member.class, 150L);
+            em.remove(member2);
             System.out.println("=======================");
 
             tx.commit();
