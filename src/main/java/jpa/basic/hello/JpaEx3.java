@@ -26,6 +26,27 @@ public class JpaEx3 {
              * 3. 변경된 값에 한해서 UPDATE SQL 생성 후 쓰기 지연 SQL 저장소에 저장
              * 4. DB에 반영
              * 5. commit
+             *
+             * fulsh란
+             * 영속성 컨텍스트의 변경내용을 데이터베이스에 반영
+             *
+             * flush 발생
+             * 1. 변경 감지
+             * 2. 수정된 엔티티 쓰기 지연 SQL 저장소에 등록
+             * 3. 쓰기 지연 SQL 저장소의 쿼리를 데이터베이스에 전송(등록, 수정, 삭제 쿼리)
+             *
+             * flush 방법
+             * 1. 직접 호출 : em.flush(); //1차 캐시에 있는 내용이 지워지진 않고 쓰기 지연 SQL 저장소에 있는 데이터만 저장이 된다.
+             * 2. 트랜잭션 커밋 : tx.commit();
+             * 3. 플러시 자동 호출 : JPQL 쿼리 실행 // 전에 persist한 경우 그 값을 못가져 왔을 때 문제가 생길 수 있으므로..
+             *
+             * flush 모드 옵션
+             * FlushModeType.AUTO : 커밋이나 쿼리를 실행 때 플러시(기본값)
+             * FlushModeType.COMMIT : 커밋할 때만 플러시
+             *
+             * fulsh는 영속성 컨텍스트를 비우지 않는다.
+             * 영속성 컨텍스트의 변경내용을 데이터베이스에 동기화한다.
+             * 트랜잭션이라는 작업 단위가 중요하다 -> 커밋 직전에만 동기화하면 됨
              */
             Member member = em.find(Member.class, 150L);
             member.setName("ZZZZZ");
