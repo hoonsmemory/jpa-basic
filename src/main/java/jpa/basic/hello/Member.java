@@ -5,14 +5,15 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-//PJA 사용
+//JPA 사용
 @Entity
 @Table(name = "Member")
 public class Member {
     @Id
     private Long id;
-
-    @Column(name = "name")
+    
+    // DDL 생성 기능(JPA의 실행 로직에는 영향을 주지 않는다.)
+    @Column(name = "name", unique = true, length = 20)
     private String name;
 
     public Member() {}
