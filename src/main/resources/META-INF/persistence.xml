@@ -18,7 +18,22 @@
             <property name="hibernate.use_sql_comments" value="true"/>
             <!-- 버퍼링 기능 -->
             <property name="hibernate.jdbc.batch_size" value="10"/>
+
+            <!-- 운영 장에비는 validate, none 이외에는 절대 사용하면 안된다.
+                 개발 단계   : create, update
+                 테스트 단계 : update, validate
+             -->
+
+            <!-- 애플리케이션이 로드될 때 테이블이 drop 후 create 한다. -->
             <!--<property name="hibernate.hbm2ddl.auto" value="create" />-->
+            <!-- 애플리케이션이 로드될 때 테이블이 drop 후 create / 종료 후 테이블 drop -->
+            <!--<property name="hibernate.hbm2ddl.auto" value="create-drop" />-->
+            <!-- 변경분만 반영(운영DB에는 사용하면 안됨) -->
+            <!--<property name="hibernate.hbm2ddl.auto" value="update" />-->
+            <!-- 엔티티와 테이블이 정상 매핑되었지만 확인 -->
+            <!--<property name="hibernate.hbm2ddl.auto" value="validate" />-->
+            <!-- 사용하지 않음 -->
+            <!--<property name="hibernate.hbm2ddl.auto" value="none" />-->
         </properties>
     </persistence-unit>
 </persistence>
