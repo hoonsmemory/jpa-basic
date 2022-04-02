@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 //JPA 사용
-@Entity
+//@Entity
 @Table(name = "Member")
 @SequenceGenerator(
         name = "MEMBER_SEQ_GENERATOR",

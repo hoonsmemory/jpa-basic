@@ -1,7 +1,5 @@
 package jpa.basic.book.shop;
 
-import jpa.basic.hello.Member;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
