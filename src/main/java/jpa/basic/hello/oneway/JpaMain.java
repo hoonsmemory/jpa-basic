@@ -1,4 +1,4 @@
-package jpa.basic.hello.manytoone;
+package jpa.basic.hello.oneway;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
