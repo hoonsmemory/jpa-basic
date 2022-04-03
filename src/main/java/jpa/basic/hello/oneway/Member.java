@@ -3,7 +3,7 @@ package jpa.basic.hello.oneway;
 import javax.persistence.*;
 
 //JPA 사용
-@Entity
+//@Entity
 @SequenceGenerator(
         name = "MEMBER_SEQ_GENERATOR",
         sequenceName = "SEQ_MEMBER",
