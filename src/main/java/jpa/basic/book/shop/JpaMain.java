@@ -1,5 +1,10 @@
 package jpa.basic.book.shop;
 
+import jpa.basic.book.shop.domain.Item;
+import jpa.basic.book.shop.domain.Member;
+import jpa.basic.book.shop.domain.Order;
+import jpa.basic.book.shop.domain.OrderItem;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
