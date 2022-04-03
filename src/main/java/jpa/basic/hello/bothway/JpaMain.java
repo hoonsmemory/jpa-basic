@@ -11,7 +11,7 @@ import javax.persistence.Persistence;
  * TEAM -> MEMBER
  *
  * 즉 객체를 양방향으로 참조하려면 단방향 연관관계를 2개 만들어야 하며,
- * 둘 중 하나로 외래 키를 관리해야 한다.(연관관계의 주인(Owner)
+ * 둘 중 하나로 외래 키를 관리해야 한다.(연관관계의 주인(Owner))
  *
  * 양방향 매핑 규칙
  * 객체의 두 관계 중 하나를 연관관계의 주인으로 지정
@@ -22,10 +22,18 @@ import javax.persistence.Persistence;
  * 
  * 그렇다면 누구를 주인으로?
  * 외래키가 있는 곳을 주인으로 정해라
+ * 
+ * 단 순수한 객체 관계를 고려하면 항상 양쪽 다 같은 값을 입력해야한다.
+ * 아래 [예시1] 참조
+ *
+ * 끝으로..
+ * 단방향 매핑만으로도 이미 연관관계 매핑은 완료되었다.
+ * (양방향 매핑은 반대 방향으로 조회(객체 그래프 탐색) 기능이 추가된 것 뿐)
+ * 단방향 매핑을 잘 하고 양방향은 필요할 때 추가해도 된다.
+ * (테이블에 영향을 주지 않음)
  */
 public class JpaMain {
     public static void main(String[] args) {
-
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
@@ -43,19 +51,33 @@ public class JpaMain {
             member1.setTeam(team1); // 단방향 연관관계 설정, 참조 저장
             em.persist(member1);
 
-            Member findMember = em.find(Member.class, member1.getId());
-            Team findTeam = findMember.getTeam();
-            System.out.println("Team : " + findTeam.getName());
+            Member member2 = new Member();
+            member2.setUsername("member2");
+            member2.setTeam(team1); // 단방향 연관관계 설정, 참조 저장
+            em.persist(member2);
 
             /**
-             * 연관관계 수정
+             * [예시 1]
+             * 현재 위와 같이 저장 후 1차 캐시(영속성 컨텍스트애 저장된 값)를 이용해 팀의 멤버스를 조회할 경우 값을 가져올 수 없다.
+             * (영속성 컨텍스트를 클리어(em.flush(), em.clear()) 후 DB에서 저장된 값을 불러 올 경우는 가져올 수 있다.)
+             * 따라서 멤버를 저장할 때 member2.setTeam()만 해주는게 아니라
+             * 멤버 저장 후 team1.getMembers().add()에다가 값을 넣어줘야 한다.
+             * team1.getMembers().add(member1);
+             * team1.getMembers().add(member2);
+             *
+             * 연관관계 편의 메소드
+             * 위와 같이 일일이 team1.getMembers().add()해주기 귀찮으니
+             * member2.setTeam()할 때 해당 메소드 안에서 team.getMembers().add(this)를 해주는 방법이 있다.
              */
-            //팀 저장
-            Team team2 = new Team();
-            team2.setName("TeamB");
-            em.persist(team2);
 
-            findMember.setTeam(team2);
+
+            Team findTeam = em.find(Team.class, team1.getId());
+
+            for(Member member : findTeam.getMembers()) {
+                System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@ " + member.getId() + " : " + member.getUsername());
+            }
+
+
             
             tx.commit();
         } catch (Exception e) {

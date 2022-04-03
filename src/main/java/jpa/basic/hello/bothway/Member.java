@@ -3,7 +3,7 @@ package jpa.basic.hello.bothway;
 import javax.persistence.*;
 
 //JPA 사용
-@Entity
+//@Entity
 public class Member {
     @Id
     @GeneratedValue
@@ -39,5 +39,6 @@ public class Member {
 
     public void setTeam(Team team) {
         this.team = team;
+        team.getMembers().add(this);
     }
 }
