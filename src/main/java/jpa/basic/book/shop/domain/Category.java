@@ -4,6 +4,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.FetchType.*;
+
 @Entity
 public class Category {
     @Id
@@ -19,7 +21,10 @@ public class Category {
     @OneToMany(mappedBy = "parent")
     private List<Category> child = new ArrayList<>();
 
-    @ManyToMany
+    /**
+     * > @ManyToOne, @OneToOne은 기본이 즉시 로딩이므로 지연 로딩으로 변경해야한다.
+     */
+    @ManyToMany(fetch = LAZY)
     @JoinTable(name = "CATEGORY_ITEM",
                joinColumns = @JoinColumn(name = "CATEGORY_ID"),
                inverseJoinColumns = @JoinColumn(name = "ITEM_ID")

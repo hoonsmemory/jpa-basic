@@ -1,9 +1,6 @@
 package jpa.basic.book.shop;
 
-import jpa.basic.book.shop.domain.Item;
-import jpa.basic.book.shop.domain.Member;
-import jpa.basic.book.shop.domain.Order;
-import jpa.basic.book.shop.domain.OrderItem;
+import jpa.basic.book.shop.domain.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -19,7 +16,11 @@ public class JpaMain {
         tx.begin();
 
         try {
+            Book book = new Book();
+            book.setName("JPA");
+            book.setAuthor("이성훈");
 
+            em.persist(book);
 
             tx.commit();
         } catch (Exception e) {
