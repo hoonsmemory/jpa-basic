@@ -4,6 +4,13 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 임베디드 타입 장점
+ * 재사용
+ * 높은 응집도
+ * Period.isWork() 처럼 해당 값 타입만 사용하는 의미 있는 메소드를 만들 수 있음
+ * 임베디드 타입을 포함한 모든 값 타입은 값 타입을 소유한 엔티티에 생명주기를 의존함
+ */
 @Entity
 public class Member {
     @Id
@@ -11,9 +18,14 @@ public class Member {
     @Column(name = "MEMBER_ID", nullable = false)
     private Long id;
     private String name;
-    private String city;
-    private String street;
-    private String zipcode;
+
+    //값 타입을 사용하는 곳에 표시
+    @Embedded
+    private Period period;
+
+    //값 타입을 사용하는 곳에 표시
+    @Embedded
+    private Address address;
 
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
@@ -30,31 +42,9 @@ public class Member {
         this.name = name;
     }
 
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getZipcode() {
-        return zipcode;
-    }
-
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
-    }
-
     public List<Order> getOrders() {
         return orders;
     }
+
+
 }
