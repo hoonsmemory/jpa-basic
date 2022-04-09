@@ -2,7 +2,9 @@ package jpa.basic.book.shop.domain;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 임베디드 타입 장점
@@ -34,9 +36,21 @@ public class Member {
     @Embedded
     private Address homeAddress;
 
+    //값 타입 컬렉션(값 타입을 하나 이상 저장할 때 사용, 컬렉션을 저장하기 위한 별도의 테이블을 생성)
+    @ElementCollection
+    @CollectionTable(name = "FAVORITE_FOOD",
+                     joinColumns = @JoinColumn(name = "MEMBER_ID")
+    )
+    @Column(name = "FOOD_NAME")
+    private Set<String> favoriteFoods = new HashSet<>();
 
     /**
      * 한 엔티티에서 같은 값 타입을 사용할 경우 속성 재정의를 통해 중복을 막을 수 있다.
+     * 값 타입 컬렉션은 영속성 전이(Cascade) + 고아 객체 제거 기능을 필수로 가진다.
+     * 조회 기본값이 지연로딩이다.
+     * 값 탕비 컬렉션에 변경 사항이 발생하면, 주인 엔티티와 연관된 모든 데이터를 삭제하고,
+     * 값 타입 컬렉션에 있는 현재 값을 모두 다시 저장한다. (실무에서는 상황에 따라 값 타입 컬렉션 대신 일대다 관계를 고려)
+     * 값이 단순하며 추척할 필요가 없을 때 갑 타입 컬렉션을 사용한다.
      */
     @Embedded
     @AttributeOverrides({
@@ -95,5 +109,13 @@ public class Member {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    public Set<String> getFavoriteFoods() {
+        return favoriteFoods;
+    }
+
+    public void setFavoriteFoods(Set<String> favoriteFoods) {
+        this.favoriteFoods = favoriteFoods;
     }
 }

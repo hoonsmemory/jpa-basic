@@ -7,10 +7,12 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 public class JpaMain {
     public static void main(String[] args) {
-        emebeddedType();
+        collection();
     }
 
 
@@ -36,6 +38,29 @@ public class JpaMain {
              *  아래와 같이 객체 생성 후 새로 넣어줘야한다.
              *  member.setHomeAddress(new Address("city", member.getHomeAddress.getStreet(), member.getHomeAddress.getZipCode()));
              */
+
+            tx.commit();
+        } catch (Exception e) {
+            tx.rollback();
+        } finally {
+            em.close();//영속성 컨텍스트를 종료한다.
+        }
+        emf.close(); //리소스 릴리즈
+    }
+
+    public static void collection() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
+
+        try {
+            Member member = new Member();
+            member.setName("이성훈");
+            member.getFavoriteFoods().add("치킨");
+            member.getFavoriteFoods().add("피자");
+            em.persist(member);
+
 
             tx.commit();
         } catch (Exception e) {
