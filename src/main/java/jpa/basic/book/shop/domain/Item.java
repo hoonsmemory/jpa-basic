@@ -37,7 +37,7 @@ import java.util.List;
  * • 여러 자식 테이블을 함께 조회할 때 성능이 느림(UNION SQL 필요)
  * • 자식 테이블을 통합해서 쿼리하기 어려움
  */
-@Entity
+//@Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "DTYPE") // 기본 DTYPE
 public abstract class Item extends BaseEntity{

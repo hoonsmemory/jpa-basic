@@ -7,7 +7,7 @@ import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
 
-@Entity
+//@Entity
 @Table(name = "ORDERS")
 public class Order {
     @Id @GeneratedValue // default : strategy = GenerationType.AUTO

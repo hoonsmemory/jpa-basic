@@ -20,7 +20,7 @@ import java.util.Set;
  * 스의 수가 더 많음
  *
  */
-@Entity
+//@Entity
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
