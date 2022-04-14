@@ -12,6 +12,8 @@ public class Member {
     @Column(name = "USERNAME")
     private String username;
 
+    private int age;
+
     private MemberType memberType;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -32,6 +34,14 @@ public class Member {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public MemberType getMemberType() {
