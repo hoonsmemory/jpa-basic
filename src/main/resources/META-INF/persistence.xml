@@ -34,6 +34,9 @@
             <!--<property name="hibernate.hbm2ddl.auto" value="validate" />-->
             <!-- 사용하지 않음 -->
             <!--<property name="hibernate.hbm2ddl.auto" value="none" />-->
+
+            <!-- n + 1 해결 (테이블 수에 맞게끔 쿼리 실행) -->
+            <property name="hibernate.defalut_batch_fetch_size" value="100"/>
         </properties>
     </persistence-unit>
 </persistence>
