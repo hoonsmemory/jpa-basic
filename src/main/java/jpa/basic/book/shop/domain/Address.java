@@ -32,16 +32,21 @@ public class Address {
         return zipcode;
     }
 
+    /*
+        equals, hashCode 를 Override 할 때는 Use getters during code generation 으로 선택해야 한다.
+        그 이유는 메서드가 아닌 필드를 직접 접근할 경우 프록시일 때는 계산이 안된다.
+        프록시를 고려하여 메서드로 접근할 수 있도록 하는 것이 좋다.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return Objects.equals(city, address.city) && Objects.equals(street, address.street) && Objects.equals(zipcode, address.zipcode);
+        return Objects.equals(getCity(), address.getCity()) && Objects.equals(getStreet(), address.getStreet()) && Objects.equals(getZipcode(), address.getZipcode());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(city, street, zipcode);
+        return Objects.hash(getCity(), getStreet(), getZipcode());
     }
 }
